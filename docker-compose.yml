@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  secure-password-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pedbip/secure-password-share:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    container_name: pedbip-secure-password-share
+    networks:
+      - secure-password-network
+
+  # Optional: Add a development service
+  secure-password-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: pedbip/secure-password-share:dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    container_name: pedbip-secure-password-share-dev
+    profiles:
+      - dev
+    networks:
+      - secure-password-network
+
+networks:
+  secure-password-network:
+    driver: bridge

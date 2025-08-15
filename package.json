@@ -1,0 +1,28 @@
+{
+  "name": "secure-password-share",
+  "version": "1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "build:static": "next build",
+    "deploy:gcp": "npm run build:static && gsutil -m rsync -r -d ./out/ gs://YOUR_BUCKET_NAME",
+    "deploy:prepare": "npm run build:static",
+    "copy:404": "powershell Copy-Item 404-redirect.html ./out/404.html"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "next": "^15.4.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
+}
